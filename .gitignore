@@ -1,0 +1,6 @@
+tools/
+logs/
+__pycache__/
+*.o
+*.elf
+*.elf.sha256

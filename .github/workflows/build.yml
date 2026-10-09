@@ -1,0 +1,42 @@
+name: Build and test DriveProbe
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install compiler
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-18 lld-18
+      - name: Download pinned SDK headers
+        run: |
+          mkdir -p tools
+          curl --fail --location --retry 3 https://github.com/ps5-payload-dev/sdk/releases/download/v0.43/ps5-payload-sdk.zip -o tools/sdk.zip
+          echo 'a9cc9929f21b2b2c5d5b309f3bab4997067c45281c0622cf4838b1aecba66fcb  tools/sdk.zip' | sha256sum --check
+          unzip -q tools/sdk.zip -d tools
+      - name: Build and validate ELF
+        run: bash build.sh
+      - name: Test log transport
+        run: python3 -m unittest test_collect -v
+      - name: Python syntax check
+        run: python3 -m py_compile collect.py ftp_baseline.py validate_elf.py test_collect.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ps5-driveprobe-elf
+          path: |
+            driveprobe.elf
+            driveprobe.elf.sha256
+          if-no-files-found: error
+          retention-days: 30
