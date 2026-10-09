@@ -27,7 +27,9 @@ jobs:
           echo 'a9cc9929f21b2b2c5d5b309f3bab4997067c45281c0622cf4838b1aecba66fcb  tools/sdk.zip' | sha256sum --check
           unzip -q tools/sdk.zip -d tools
       - name: Build and validate ELF
-        run: bash build.sh
+        run: |
+          bash build.sh
+          bash build-sdk.sh
       - name: Test log transport
         run: python3 -m unittest test_collect -v
       - name: Python syntax check
@@ -38,5 +40,8 @@ jobs:
           path: |
             driveprobe.elf
             driveprobe.elf.sha256
+            driveprobe-sdk.elf
+            driveprobe-sdk.elf.sha256
           if-no-files-found: error
           retention-days: 30
+
