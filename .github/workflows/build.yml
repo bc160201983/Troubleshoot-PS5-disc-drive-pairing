@@ -31,10 +31,10 @@ jobs:
           bash build.sh
           bash build-sdk.sh
           bash build-status.sh
-      - name: Test log transport
-        run: python3 -m unittest test_collect -v
+      - name: Test transport and ELF validation
+        run: python3 -m unittest test_collect test_validate_elf -v
       - name: Python syntax check
-        run: python3 -m py_compile collect.py ftp_baseline.py validate_elf.py test_collect.py
+        run: python3 -m py_compile collect.py ftp_baseline.py validate_elf.py test_collect.py test_validate_elf.py
       - uses: actions/upload-artifact@v4
         with:
           name: ps5-driveprobe-elf
@@ -47,4 +47,5 @@ jobs:
             driveprobe-status.elf.sha256
           if-no-files-found: error
           retention-days: 30
+
 

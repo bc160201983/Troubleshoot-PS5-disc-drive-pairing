@@ -12,3 +12,4 @@ linker="${LD:-ld.lld-18}"
   "$sdk_root/target/lib/crt1.o" driveprobe-sdk.o \
   -lc -lkernel_web -lSceLibcInternal -lSceNet -o driveprobe-sdk.elf
 sha256sum driveprobe-sdk.elf > driveprobe-sdk.elf.sha256
+python3 validate_elf.py --sdk driveprobe-sdk.elf
