@@ -30,6 +30,7 @@ jobs:
         run: |
           bash build.sh
           bash build-sdk.sh
+          bash build-status.sh
       - name: Test log transport
         run: python3 -m unittest test_collect -v
       - name: Python syntax check
@@ -42,6 +43,8 @@ jobs:
             driveprobe.elf.sha256
             driveprobe-sdk.elf
             driveprobe-sdk.elf.sha256
+            driveprobe-status.elf
+            driveprobe-status.elf.sha256
           if-no-files-found: error
           retention-days: 30
 

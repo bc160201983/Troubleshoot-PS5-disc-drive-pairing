@@ -39,3 +39,7 @@ Raw console logs, IP addresses, toolchains, firmware binaries, and private resea
 GPL-3.0-or-later; see LICENSE. The loader declarations, entry assembly and adapted linker script originate from [ps5-payload-dev/sdk](https://github.com/ps5-payload-dev/sdk) commit `10b539de8f2b6773a9a78caa7576a97dbd99b29a` and retain their notices. SDK headers retain their respective licenses.
 
 Reference loader: [elfldr](https://github.com/ps5-payload-dev/elfldr). Pairing-status ABI reference: [ddd_pair_dump](https://git.etawen.dev/earthonion/ddd_pair_dump), inspected commit `5fe02e0`.
+
+## Native status through elfldr stdout
+
+`driveprobe-status.elf` provides guarded, read-only native power, attachment, extended-status, and chucking queries on the tested 7.00 and 11.40 firmware identifiers. It returns its report through elfldr stdout and does not require FTP. See [STATUS-PROBE.md](STATUS-PROBE.md) for build and transport instructions. It is a diagnostic, not a pairing repair.
