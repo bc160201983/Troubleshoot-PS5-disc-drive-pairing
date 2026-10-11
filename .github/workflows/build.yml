@@ -31,6 +31,7 @@ jobs:
           bash build.sh
           bash build-sdk.sh
           bash build-status.sh
+          bash build-compare.sh
       - name: Test transport and ELF validation
         run: python3 -m unittest test_collect test_validate_elf -v
       - name: Python syntax check
@@ -45,6 +46,8 @@ jobs:
             driveprobe-sdk.elf.sha256
             driveprobe-status.elf
             driveprobe-status.elf.sha256
+            driveprobe-compare.elf
+            driveprobe-compare.elf.sha256
           if-no-files-found: error
           retention-days: 30
 
